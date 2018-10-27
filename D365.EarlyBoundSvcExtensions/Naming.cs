@@ -6,7 +6,8 @@ using Microsoft.Xrm.Sdk.Metadata;
 namespace D365.EarlyBoundSvcExtensions
 {
     /// <summary>
-    /// Allows to manipulate the naming of any metadata type.
+    /// Called during the CodeDOM generation to determine the name for objects,
+    /// assuming the default implementation.
     /// </summary>
     public class Naming : INamingService
     {

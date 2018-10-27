@@ -5,7 +5,8 @@ using Microsoft.Xrm.Sdk.Metadata;
 namespace D365.EarlyBoundSvcExtensions
 {
     /// <summary>
-    /// Allows to filter out different metadata types based on Names
+    /// Called during the process of CodeDOM generation, assuming the default instance of ICodeGenerationService,
+    /// to determine whether a specific object or property should be generated.
     /// </summary>
     public class CodeWriterFilter : ICodeWriterFilterService
     {

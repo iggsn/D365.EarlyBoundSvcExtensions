@@ -4,6 +4,10 @@ using Microsoft.Xrm.Sdk.Metadata;
 
 namespace D365.EarlyBoundSvcExtensions
 {
+    /// <summary>
+    /// Core implementation of the CodeDOM generation. If this is changed, the other extensions may not behave in the
+    /// manner described.
+    /// </summary>
     public class CodeGeneration : ICodeGenerationService
     {
         private ICodeGenerationService DefaultService { get; }
@@ -17,47 +21,46 @@ namespace D365.EarlyBoundSvcExtensions
             IServiceProvider services)
         {
             DefaultService.Write(organizationMetadata, language, outputFile, targetNamespace, services);
-            throw new NotImplementedException();
         }
 
         public CodeGenerationType GetTypeForOptionSet(EntityMetadata entityMetadata, OptionSetMetadataBase optionSetMetadata,
             IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForOptionSet(entityMetadata, optionSetMetadata, services);
         }
 
         public CodeGenerationType GetTypeForOption(OptionSetMetadataBase optionSetMetadata, OptionMetadata optionMetadata,
             IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForOption(optionSetMetadata, optionMetadata, services);
         }
 
         public CodeGenerationType GetTypeForEntity(EntityMetadata entityMetadata, IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForEntity(entityMetadata, services);
         }
 
         public CodeGenerationType GetTypeForAttribute(EntityMetadata entityMetadata, AttributeMetadata attributeMetadata,
             IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForAttribute(entityMetadata, attributeMetadata, services);
         }
 
         public CodeGenerationType GetTypeForMessagePair(SdkMessagePair messagePair, IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForMessagePair(messagePair, services);
         }
 
         public CodeGenerationType GetTypeForRequestField(SdkMessageRequest request, SdkMessageRequestField requestField,
             IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForRequestField(request, requestField, services);
         }
 
         public CodeGenerationType GetTypeForResponseField(SdkMessageResponse response, SdkMessageResponseField responseField,
             IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GetTypeForResponseField(response, responseField, services);
         }
     }
 }
