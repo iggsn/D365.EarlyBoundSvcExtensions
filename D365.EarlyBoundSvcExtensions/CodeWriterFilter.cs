@@ -4,37 +4,47 @@ using Microsoft.Xrm.Sdk.Metadata;
 
 namespace D365.EarlyBoundSvcExtensions
 {
+    /// <summary>
+    /// Allows to filter out different metadata types based on Names
+    /// </summary>
     public class CodeWriterFilter : ICodeWriterFilterService
     {
+        private ICodeWriterFilterService DefaultService { get; }
+
+        public CodeWriterFilter(ICodeWriterFilterService defaultService)
+        {
+            DefaultService = defaultService;
+        }
+
         public bool GenerateOptionSet(OptionSetMetadataBase optionSetMetadata, IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GenerateOptionSet(optionSetMetadata, services);
         }
 
         public bool GenerateOption(OptionMetadata optionMetadata, IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GenerateOption(optionMetadata, services);
         }
 
         public bool GenerateEntity(EntityMetadata entityMetadata, IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GenerateEntity(entityMetadata, services);
         }
 
         public bool GenerateAttribute(AttributeMetadata attributeMetadata, IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GenerateAttribute(attributeMetadata, services);
         }
 
         public bool GenerateRelationship(RelationshipMetadataBase relationshipMetadata, EntityMetadata otherEntityMetadata,
             IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GenerateRelationship(relationshipMetadata, otherEntityMetadata, services);
         }
 
         public bool GenerateServiceContext(IServiceProvider services)
         {
-            throw new NotImplementedException();
+            return DefaultService.GenerateServiceContext(services);
         }
     }
 }

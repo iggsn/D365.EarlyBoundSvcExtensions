@@ -6,9 +6,17 @@ namespace D365.EarlyBoundSvcExtensions
 {
     public class CodeGeneration : ICodeGenerationService
     {
+        private ICodeGenerationService DefaultService { get; }
+
+        public CodeGeneration(ICodeGenerationService service)
+        {
+            DefaultService = service;
+        }
+
         public void Write(IOrganizationMetadata organizationMetadata, string language, string outputFile, string targetNamespace,
             IServiceProvider services)
         {
+            DefaultService.Write(organizationMetadata, language, outputFile, targetNamespace, services);
             throw new NotImplementedException();
         }
 
