@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Crm.Services.Utility;
 using Microsoft.Xrm.Sdk.Metadata;
 
@@ -10,11 +11,14 @@ namespace D365.EarlyBoundSvcExtensions
     /// </summary>
     public class CodeWriterFilter : ICodeWriterFilterService
     {
+        public List<string> EntityPrefixToSkip { get; set; }
+
         private ICodeWriterFilterService DefaultService { get; }
 
         public CodeWriterFilter(ICodeWriterFilterService defaultService)
         {
             DefaultService = defaultService;
+            EntityPrefixToSkip = new List<string>{ "msdyn_", "crmp_" };
         }
 
         public bool GenerateOptionSet(OptionSetMetadataBase optionSetMetadata, IServiceProvider services)
