@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using D365.EarlyBoundSvcExtensions.Core;
 using D365.EarlyBoundSvcExtensions.Data;
 using Microsoft.Crm.Services.Utility;
@@ -74,22 +75,18 @@ namespace D365.EarlyBoundSvcExtensions
         {
             IOrganizationMetadata metadata;
 
-            if ( /*config to be from file && file exist*/ false)
-            {
-                // try to read Metadata from file to get client timestamp
-                // if client timestamp get server timestamp to verify correctness
-                // otherwise load internal
-            }
-            else
+            if (!ReadSerializedMetadata && !File.Exists(RootPath(FilePath)))
             {
                 metadata = DefaultService.LoadMetadata();
 
+                if (SerializeMetadata)
+                {
+                    SerializeMetadataToFile(metadata, FilePath);
+                }
             }
-
-            // if to be serialized --> serialize
-            if (SerializeMetadata)
+            else
             {
-                SerializeMetadataToFile(metadata, FilePath);
+                metadata = DeserializeMetadata(FilePath);
             }
 
             return metadata;
@@ -105,7 +102,16 @@ namespace D365.EarlyBoundSvcExtensions
             };
 
             filePath = RootPath(filePath);
-            File.WriteAllText(filePath, Serializer.SerializeJsonDc(localMetadata));
+            var serialized = Serializer.SerializeJsonDc(localMetadata);
+            File.WriteAllText(filePath, serialized);
+        }
+
+        private static IOrganizationMetadata DeserializeMetadata(string filePath)
+        {
+            filePath = RootPath(filePath);
+            string fileContent = File.ReadAllText(filePath);
+            MemoryStream metadataJson = new MemoryStream(Encoding.UTF8.GetBytes(fileContent));
+            return Serializer.DeserializeJsonDc<Metadata>(metadataJson);
         }
 
         private static string RootPath(string filePath)

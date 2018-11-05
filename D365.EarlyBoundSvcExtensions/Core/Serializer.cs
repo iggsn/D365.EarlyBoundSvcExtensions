@@ -44,6 +44,7 @@ namespace D365.EarlyBoundSvcExtensions.Core
                     {
                         DateTimeFormat = new DateTimeFormat("yyyy-MM-dd hh:mm:ss"),
                         EmitTypeInformation = EmitTypeInformation.AsNeeded,
+                        IgnoreExtensionDataObject = true
                     });
 
                 serializer.WriteObject(stream, value);

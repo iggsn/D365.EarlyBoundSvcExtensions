@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using Microsoft.Crm.Services.Utility;
 using Microsoft.Xrm.Sdk.Metadata;
 
 namespace D365.EarlyBoundSvcExtensions.Data
 {
+    [DataContract(Namespace = "http://D365.EarlyBoundSvcExtensions.Data")]
     public class Metadata : IOrganizationMetadata, IExtensibleDataObject
     {
         [DataMember]
@@ -17,8 +13,20 @@ namespace D365.EarlyBoundSvcExtensions.Data
         [DataMember]
         public OptionSetMetadataBase[] OptionSets { get; set; }
 
+        private SdkMessages _messages;
+
+        public SdkMessages Messages
+        {
+            get => _messages ?? (_messages = MetadataMessages);
+            set
+            {
+                _messages = value;
+                MetadataMessages = new MetadataMessages(value);
+            }
+        }
+
         [DataMember]
-        public SdkMessages Messages { get; set;  }
+        public MetadataMessages MetadataMessages { get; set; }
 
         public ExtensionDataObject ExtensionData { get; set; }
     }
