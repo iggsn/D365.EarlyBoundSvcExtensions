@@ -73,7 +73,7 @@ namespace D365.EarlyBoundSvcExtensions
         {
             IOrganizationMetadata metadata;
 
-            if (!ReadSerializedMetadata && !File.Exists(RootPath(FilePath)))
+            if (!File.Exists(RootPath(FilePath)) || !ReadSerializedMetadata)
             {
                 metadata = DefaultService.LoadMetadata();
 
